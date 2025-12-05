@@ -1,0 +1,6 @@
+FromCurrency,ToCurrency,Rate
+EUR,UAH,40.0
+EUR,USD,1.08
+EUR,EUR,1.0
+UAH,EUR,0.025
+USD,EUR,0.93
