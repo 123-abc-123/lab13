@@ -1,61 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using lab13.Models;
 
 namespace lab13
 {
     public partial class SearchForm : Form
     {
         public List<SearchCondition> Conditions { get; private set; }
+        private List<SearchCondition> _conditions;
 
         public SearchForm()
         {
             InitializeComponent();
-            Conditions = new List<SearchCondition>();
-            InitializeFields();
-        }
-
-        private void InitializeFields()
-        {
-            cmbField.Items.AddRange(new string[] {
-                "Group", "Name", "Manufacturer", "Supplier",
-                "Unit", "Price", "Quantity"
-            });
-
-            cmbOperator.Items.AddRange(new string[] {
-                "=", "!=", ">", "<", ">=", "<=", "Contains", "StartsWith"
-            });
-
-            cmbField.SelectedIndex = 0;
-            cmbOperator.SelectedIndex = 0;
+            _conditions = new List<SearchCondition>();
         }
 
         private void btnAddCondition_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtValue.Text))
+            if (!string.IsNullOrEmpty(cmbField.Text) && !string.IsNullOrEmpty(cmbOperator.Text))
             {
-                MessageBox.Show("Please enter a value for the condition.");
-                return;
-            }
-
-            var condition = new SearchCondition
-            {
-                Field = cmbField.SelectedItem.ToString(),
-                Operator = cmbOperator.SelectedItem.ToString(),
-                Value = txtValue.Text
-            };
-
-            Conditions.Add(condition);
-            UpdateConditionsList();
-            txtValue.Clear();
-        }
-
-        private void UpdateConditionsList()
-        {
-            lstConditions.Items.Clear();
-            foreach (var condition in Conditions)
-            {
-                lstConditions.Items.Add($"{condition.Field} {condition.Operator} '{condition.Value}'");
+                var condition = new SearchCondition
+                {
+                    Field = cmbField.Text,
+                    Operator = cmbOperator.Text,
+                    Value = txtValue.Text
+                };
+                _conditions.Add(condition);
+                UpdateConditionsList();
             }
         }
 
@@ -63,28 +35,33 @@ namespace lab13
         {
             if (lstConditions.SelectedIndex >= 0)
             {
-                Conditions.RemoveAt(lstConditions.SelectedIndex);
+                _conditions.RemoveAt(lstConditions.SelectedIndex);
                 UpdateConditionsList();
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void btnClearConditions_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            _conditions.Clear();
+            UpdateConditionsList();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void UpdateConditionsList()
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            lstConditions.Items.Clear();
+            foreach (var condition in _conditions)
+            {
+                lstConditions.Items.Add($"{condition.Field} {condition.Operator} '{condition.Value}'");
+            }
         }
-    }
 
-    public class SearchCondition
-    {
-        public string Field { get; set; }
-        public string Operator { get; set; }
-        public string Value { get; set; }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (this.DialogResult == DialogResult.OK)
+            {
+                Conditions = new List<SearchCondition>(_conditions);
+            }
+            base.OnFormClosing(e);
+        }
     }
 }

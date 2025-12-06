@@ -7,57 +7,72 @@ namespace lab13
 {
     public partial class EditForm : Form
     {
-        private Product product;
-        private FileRepository repository;
+        private Product _product;
+        private IProductRepository _repository;
+        private string _warehouseName;
 
-        public EditForm(Product productToEdit, FileRepository repo)
+        public EditForm(Product product, IProductRepository repository, string warehouseName)
         {
             InitializeComponent();
-            product = productToEdit;
-            repository = repo;
+            _product = product;
+            _repository = repository;
+            _warehouseName = warehouseName;
             LoadProductData();
         }
 
         private void LoadProductData()
         {
-            txtName.Text = product.Name;
-            txtManufacturer.Text = product.Manufacturer;
-            txtPrice.Text = product.BasePrice.ToString();
-            txtQuantity.Text = product.Quantity.ToString();
-
-            cmbGroup.Items.AddRange(new string[] { "Книги", "Електроніка", "Одяг" });
-            cmbSupplier.Items.AddRange(new string[] { "ТзОВ 'Інтерсервіс'", "Приватне підприємство 'Магазин'", "ТОВ 'Дистриб' " });
-            cmbUnit.Items.AddRange(new string[] { "шт.", "кг", "л" });
-            cmbCurrency.Items.AddRange(new string[] { "UAH", "USD", "EUR" });
-
-            cmbGroup.SelectedItem = product.Group;
-            cmbSupplier.SelectedItem = product.Supplier;
-            cmbUnit.SelectedItem = product.Unit;
-            cmbCurrency.SelectedItem = product.OriginalCurrency;
+            txtGroup.Text = _product.Group;
+            txtName.Text = _product.Name;
+            txtManufacturer.Text = _product.Manufacturer;
+            txtSupplier.Text = _product.Supplier;
+            txtUnit.Text = _product.Unit;
+            txtPrice.Text = _product.BasePrice.ToString("N2");
+            cmbCurrency.Text = _product.OriginalCurrency;
+            txtQuantity.Text = _product.Quantity.ToString();
+            txtWarehouse.Text = _warehouseName;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!decimal.TryParse(txtPrice.Text, out decimal price) ||
-                !int.TryParse(txtQuantity.Text, out int quantity))
+            try
             {
-                MessageBox.Show("Ціна та кількість мають бути числовими значеннями.", "Помилка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (!decimal.TryParse(txtPrice.Text, out decimal price))
+                {
+                    MessageBox.Show("Некоректний формат ціни", "Помилка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!int.TryParse(txtQuantity.Text, out int quantity))
+                {
+                    MessageBox.Show("Некоректний формат кількості", "Помилка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var updatedProduct = new Product
+                {
+                    Id = _product.Id,
+                    Group = txtGroup.Text,
+                    Name = txtName.Text,
+                    Manufacturer = txtManufacturer.Text,
+                    Supplier = txtSupplier.Text,
+                    Unit = txtUnit.Text,
+                    BasePrice = price,
+                    OriginalCurrency = cmbCurrency.Text,
+                    Quantity = quantity
+                };
+
+                _repository.UpdateProductInWarehouse(_warehouseName, updatedProduct);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-            product.Name = txtName.Text;
-            product.Manufacturer = txtManufacturer.Text;
-            product.BasePrice = price;
-            product.Quantity = quantity;
-            product.Group = cmbGroup.SelectedItem?.ToString();
-            product.Supplier = cmbSupplier.SelectedItem?.ToString();
-            product.Unit = cmbUnit.SelectedItem?.ToString();
-            product.OriginalCurrency = cmbCurrency.SelectedItem?.ToString();
-
-            repository.Update(product);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при збереженні змін: {ex.Message}", "Помилка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

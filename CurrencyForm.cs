@@ -10,21 +10,25 @@ namespace lab13
         public CurrencyForm(string currentCurrency)
         {
             InitializeComponent();
-            cmbCurrency.Items.AddRange(new string[] { "UAH", "USD", "EUR" });
-            cmbCurrency.SelectedItem = currentCurrency;
+
+            if (cmbCurrency.Items.Contains(currentCurrency))
+            {
+                cmbCurrency.SelectedItem = currentCurrency;
+            }
+            else if (cmbCurrency.Items.Count > 0)
+            {
+                cmbCurrency.SelectedIndex = 0;
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SelectedCurrency = cmbCurrency.SelectedItem?.ToString() ?? "UAH";
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            SelectedCurrency = cmbCurrency.SelectedItem?.ToString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            // Nothing to do here - form will close with Cancel result
         }
     }
 }
