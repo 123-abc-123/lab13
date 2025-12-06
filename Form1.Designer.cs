@@ -26,6 +26,8 @@
             this.зберегтиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.завантажитиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.експортУPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.змінитиВалютуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.курсиВалютToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -98,6 +100,8 @@
             this.зберегтиToolStripMenuItem,
             this.завантажитиToolStripMenuItem,
             this.toolStripSeparator1,
+            this.експортУPDFToolStripMenuItem,
+            this.toolStripSeparator4,
             this.змінитиВалютуToolStripMenuItem,
             this.курсиВалютToolStripMenuItem,
             this.toolStripSeparator2,
@@ -122,6 +126,17 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // експортУPDFToolStripMenuItem
+            // 
+            this.експортУPDFToolStripMenuItem.Name = "експортУPDFToolStripMenuItem";
+            this.експортУPDFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.експортУPDFToolStripMenuItem.Text = "📄 Експорт у PDF";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // змінитиВалютуToolStripMenuItem
             // 
@@ -533,13 +548,12 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-
-
             // In the InitializeComponent() method of Form1
 
             // File menu items
             this.зберегтиToolStripMenuItem.Click += new System.EventHandler(this.зберегтиToolStripMenuItem_Click);
             this.завантажитиToolStripMenuItem.Click += new System.EventHandler(this.завантажитиToolStripMenuItem_Click);
+            this.експортУPDFToolStripMenuItem.Click += new System.EventHandler(this.ExportToPdfToolStripMenuItem_Click);
             this.змінитиВалютуToolStripMenuItem.Click += new System.EventHandler(this.змінитиВалютуToolStripMenuItem_Click);
             this.курсиВалютToolStripMenuItem.Click += new System.EventHandler(this.курсиВалютToolStripMenuItem_Click);
             this.вихідToolStripMenuItem.Click += new System.EventHandler(this.вихідToolStripMenuItem_Click);
@@ -574,6 +588,8 @@
         private System.Windows.Forms.ToolStripMenuItem зберегтиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem завантажитиToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem експортУPDFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem змінитиВалютуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem курсиВалютToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

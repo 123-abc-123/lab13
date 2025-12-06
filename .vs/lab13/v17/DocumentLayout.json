@@ -3,40 +3,16 @@
   "WorkspaceRootPath": "D:\\Users\\USER\\Desktop\\lab13\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|d:\\users\\user\\desktop\\lab13\\pdfexportpreviewform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:pdfexportpreviewform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|d:\\users\\user\\desktop\\lab13\\pdfexportpreviewform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:pdfexportpreviewform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|d:\\users\\user\\desktop\\lab13\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\editform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:editform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\searchform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:searchform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\currencyform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:currencyform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\currencyform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:currencyform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|D:\\Users\\USER\\Desktop\\lab13\\searchform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447C3661-57B7-4C14-ABA8-FA1DC67C8230}|lab13.csproj|solutionrelative:searchform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,117 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "SearchForm.Designer.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\SearchForm.Designer.cs",
-              "RelativeDocumentMoniker": "SearchForm.Designer.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\SearchForm.Designer.cs",
-              "RelativeToolTip": "SearchForm.Designer.cs",
-              "ViewState": "AQIAAJ4AAAAAAAAAAAAQwLYAAAAtAAAA",
+              "DocumentIndex": 0,
+              "Title": "PdfExportPreviewForm.cs",
+              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\PdfExportPreviewForm.cs",
+              "RelativeDocumentMoniker": "PdfExportPreviewForm.cs",
+              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\PdfExportPreviewForm.cs",
+              "RelativeToolTip": "PdfExportPreviewForm.cs",
+              "ViewState": "AQIAAN4BAAAAAAAAAAAuwC8CAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T21:00:51.755Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.Designer.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\Form1.Designer.cs",
-              "RelativeDocumentMoniker": "Form1.Designer.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\Form1.Designer.cs",
-              "RelativeToolTip": "Form1.Designer.cs",
-              "ViewState": "AQIAAC8CAAAAAAAAAAAcwE8CAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T21:00:41.25Z",
+              "WhenOpened": "2025-12-06T21:27:01.072Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CurrencyForm.Designer.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\CurrencyForm.Designer.cs",
-              "RelativeDocumentMoniker": "CurrencyForm.Designer.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\CurrencyForm.Designer.cs",
-              "RelativeToolTip": "CurrencyForm.Designer.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAQwDwAAAAYAAAA",
+              "DocumentIndex": 1,
+              "Title": "PdfExportPreviewForm.Designer.cs",
+              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\PdfExportPreviewForm.Designer.cs",
+              "RelativeDocumentMoniker": "PdfExportPreviewForm.Designer.cs",
+              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\PdfExportPreviewForm.Designer.cs",
+              "RelativeToolTip": "PdfExportPreviewForm.Designer.cs",
+              "ViewState": "AQIAAM4BAAAAAAAAAAAvwO4BAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T21:00:35.322Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CurrencyForm.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\CurrencyForm.cs",
-              "RelativeDocumentMoniker": "CurrencyForm.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\CurrencyForm.cs",
-              "RelativeToolTip": "CurrencyForm.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T20:23:03.911Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SearchForm.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\SearchForm.cs",
-              "RelativeDocumentMoniker": "SearchForm.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\SearchForm.cs",
-              "RelativeToolTip": "SearchForm.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAUwCoAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T20:22:14.456Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EditForm.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\EditForm.cs",
-              "RelativeDocumentMoniker": "EditForm.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\EditForm.cs",
-              "RelativeToolTip": "EditForm.cs",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAAADcAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T20:21:31.923Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAIwCwAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T16:04:20.325Z",
+              "WhenOpened": "2025-12-06T21:25:46.879Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\Repository.cs",
-              "RelativeDocumentMoniker": "Repository.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\Repository.cs",
-              "RelativeToolTip": "Repository.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAxwBoAAAAAAAAA",
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AQIAAIQEAAAAAAAAAAAAAKoEAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T17:24:30.183Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Model.cs",
-              "DocumentMoniker": "D:\\Users\\USER\\Desktop\\lab13\\Model.cs",
-              "RelativeDocumentMoniker": "Model.cs",
-              "ToolTip": "D:\\Users\\USER\\Desktop\\lab13\\Model.cs",
-              "RelativeToolTip": "Model.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAwwCsAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T17:04:33.714Z"
+              "WhenOpened": "2025-12-06T21:25:35.309Z",
+              "EditorCaption": ""
             }
           ]
         }

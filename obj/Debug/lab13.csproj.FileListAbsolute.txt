@@ -30,3 +30,8 @@ D:\Users\USER\Desktop\lab13\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Users\USER\Desktop\lab13\obj\Debug\lab13.CurrencyForm.resources
 D:\Users\USER\Desktop\lab13\obj\Debug\lab13.EditForm.resources
 D:\Users\USER\Desktop\lab13\obj\Debug\lab13.SearchForm.resources
+D:\Users\USER\Desktop\lab13\bin\Debug\BouncyCastle.Cryptography.dll
+D:\Users\USER\Desktop\lab13\bin\Debug\itextsharp.dll
+D:\Users\USER\Desktop\lab13\bin\Debug\BouncyCastle.Cryptography.xml
+D:\Users\USER\Desktop\lab13\bin\Debug\itextsharp.xml
+D:\Users\USER\Desktop\lab13\obj\Debug\lab13.PdfExportPreviewForm.resources

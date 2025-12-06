@@ -4,8 +4,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 using lab13.Models;
 using lab13.Repositories;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharpFont = iTextSharp.text.Font;
 
 namespace lab13
 {
@@ -17,8 +21,8 @@ namespace lab13
         private string _currentDisplayCurrency = "UAH";
         private string _currentGroupFilter = null;
 
-        // Helper class for display
-        private class ProductDisplayItem
+        // Helper class for display - make it public
+        public class ProductDisplayItem
         {
             public int RowNumber { get; set; }
             public Product Product { get; set; }
@@ -923,5 +927,283 @@ namespace lab13
                 }
             }
         }
+
+        // PDF Export functionality
+        private void ExportToPdfToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentWarehouse == null || _displayItems == null || _displayItems.Count == 0)
+            {
+                MessageBox.Show("Немає даних для експорту.", "Помилка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Show preview dialog
+            using (var previewDialog = new PdfExportPreviewForm(_currentWarehouse, _displayItems.ToList(), _currentGroupFilter))
+            {
+                if (previewDialog.ShowDialog() == DialogResult.OK)
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    {
+                        Filter = "PDF файли (*.pdf)|*.pdf",
+                        FileName = $"Склад_{_currentWarehouse.Name}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf",
+                        Title = "Зберегти як PDF"
+                    };
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ExportToPdf(saveFileDialog.FileName, previewDialog.Metadata, previewDialog.IncludeHeaders);
+                            MessageBox.Show($"Файл успішно збережено:\n{saveFileDialog.FileName}", "Успіх",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Помилка при збереженні PDF: {ex.Message}", "Помилка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ExportToPdf(string filePath, PdfMetadata metadata, bool includeHeaders)
+        {
+            try
+            {
+                string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                if (!File.Exists(fontPath))
+                    fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "Arial.ttf");
+
+                BaseFont baseFont = null;
+                if (File.Exists(fontPath))
+                {
+                    baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                }
+                else
+                {
+                    baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED);
+                }
+
+                // Use selected orientation
+                iTextSharp.text.Rectangle pageSize = metadata.IsLandscape ? PageSize.A4.Rotate() : PageSize.A4;
+                Document document = new Document(pageSize, 25, 25, 30, 30);
+
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    PdfWriter writer = PdfWriter.GetInstance(document, stream);
+
+                    document.AddTitle(metadata.Title);
+                    document.AddSubject(metadata.Subject);
+                    document.AddKeywords(metadata.Keywords);
+                    document.AddCreator("Warehouse Management System");
+                    document.AddAuthor(metadata.Author);
+
+                    document.Open();
+
+                    AddHeader(document, metadata, baseFont);
+                    AddDataGrid(document, metadata, includeHeaders, baseFont);
+                    AddFooter(document, baseFont);
+
+                    document.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Помилка при створенні PDF: {ex.Message}", ex);
+            }
+        }
+
+        private void AddHeader(Document document, PdfMetadata metadata, BaseFont baseFont)
+        {
+            // Title
+            iTextSharpFont titleFont = new iTextSharpFont(baseFont, 16, iTextSharpFont.BOLD, BaseColor.BLACK);
+            Paragraph title = new Paragraph(metadata.Title, titleFont);
+            title.Alignment = Element.ALIGN_CENTER;
+            title.SpacingAfter = 10;
+            document.Add(title);
+
+            // Warehouse info
+            iTextSharpFont infoFont = new iTextSharpFont(baseFont, 10, iTextSharpFont.NORMAL, BaseColor.BLACK);
+            iTextSharpFont infoBoldFont = new iTextSharpFont(baseFont, 10, iTextSharpFont.BOLD, BaseColor.BLACK);
+
+            Paragraph warehouseInfo = new Paragraph();
+            warehouseInfo.Add(new Chunk("Склад: ", infoFont));
+            warehouseInfo.Add(new Chunk(metadata.WarehouseName, infoBoldFont));
+
+            if (!string.IsNullOrEmpty(metadata.GroupFilter))
+            {
+                warehouseInfo.Add(new Chunk("   |   Група: ", infoFont));
+                warehouseInfo.Add(new Chunk(metadata.GroupFilter, infoBoldFont));
+            }
+
+            warehouseInfo.Add(new Chunk("   |   Дата формування: ", infoFont));
+            warehouseInfo.Add(new Chunk(metadata.ExportDate.ToString("dd.MM.yyyy HH:mm"), infoBoldFont));
+
+            // Add orientation info
+            string orientation = metadata.IsLandscape ? "Альбомна" : "Книжна";
+            warehouseInfo.Add(new Chunk("   |   Орієнтація: ", infoFont));
+            warehouseInfo.Add(new Chunk(orientation, infoBoldFont));
+
+            warehouseInfo.Alignment = Element.ALIGN_CENTER;
+            warehouseInfo.SpacingAfter = 15;
+            document.Add(warehouseInfo);
+
+            // Separator line
+            PdfPTable separator = new PdfPTable(1);
+            separator.WidthPercentage = 100;
+            PdfPCell lineCell = new PdfPCell();
+            lineCell.Border = PdfPCell.NO_BORDER;
+            lineCell.FixedHeight = 1f;
+            lineCell.BackgroundColor = BaseColor.GRAY;
+            separator.AddCell(lineCell);
+            separator.SpacingAfter = 10;
+            document.Add(separator);
+        }
+
+        private void AddDataGrid(Document document, PdfMetadata metadata, bool includeHeaders, BaseFont baseFont)
+        {
+            // Create PDF table with 11 columns
+            PdfPTable table = new PdfPTable(11);
+            table.WidthPercentage = 100;
+
+            // Adjust column widths based on orientation
+            float[] columnWidths;
+            if (metadata.IsLandscape)
+            {
+                // Wider columns for landscape
+                columnWidths = new float[] { 0.5f, 1.0f, 1.5f, 1.2f, 1.5f, 0.8f, 0.8f, 0.6f, 0.8f, 1.0f, 0.8f };
+            }
+            else
+            {
+                // Narrower columns for portrait
+                columnWidths = new float[] { 0.4f, 0.8f, 1.2f, 1.0f, 1.2f, 0.6f, 0.6f, 0.5f, 0.6f, 0.8f, 0.6f };
+            }
+
+            table.SetWidths(columnWidths);
+            table.SpacingBefore = 10;
+
+            iTextSharpFont headerFont = new iTextSharpFont(baseFont, metadata.IsLandscape ? 9 : 8, iTextSharpFont.BOLD, BaseColor.WHITE);
+            iTextSharpFont cellFont = new iTextSharpFont(baseFont, metadata.IsLandscape ? 8 : 7, iTextSharpFont.NORMAL, BaseColor.BLACK);
+            iTextSharpFont boldFont = new iTextSharpFont(baseFont, metadata.IsLandscape ? 8 : 7, iTextSharpFont.BOLD, BaseColor.BLACK);
+
+            // Add headers if requested
+            if (includeHeaders)
+            {
+                string[] headers = {
+            "№ п/п", "Група", "Назва", "Виробник", "Постачальник",
+            "Од. виміру", "Ціна", "Вал", "Кількість", "Вартість", "Дата"
+        };
+
+                foreach (string header in headers)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(header, headerFont));
+                    cell.BackgroundColor = new BaseColor(51, 102, 153);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Padding = metadata.IsLandscape ? 5 : 4;
+                    cell.MinimumHeight = metadata.IsLandscape ? 20 : 18;
+                    table.AddCell(cell);
+                }
+            }
+
+            decimal totalValueSum = 0;
+            int totalQuantity = 0;
+
+            // Add data rows
+            foreach (var item in metadata.DisplayItems)
+            {
+                AddCell(table, item.RowNumber.ToString(), cellFont, Element.ALIGN_CENTER);
+                AddCell(table, item.Group, cellFont, Element.ALIGN_LEFT);
+                AddCell(table, item.Name, cellFont, Element.ALIGN_LEFT);
+                AddCell(table, item.Manufacturer, cellFont, Element.ALIGN_LEFT);
+                AddCell(table, item.Supplier, cellFont, Element.ALIGN_LEFT);
+                AddCell(table, item.Unit, cellFont, Element.ALIGN_CENTER);
+                AddCell(table, item.Price.ToString("N2"), cellFont, Element.ALIGN_RIGHT);
+                AddCell(table, item.Currency, cellFont, Element.ALIGN_CENTER);
+                AddCell(table, item.Quantity.ToString(), cellFont, Element.ALIGN_RIGHT);
+                AddCell(table, item.TotalValue.ToString("N2"), cellFont, Element.ALIGN_RIGHT);
+                AddCell(table, item.Date.ToString("dd.MM.yyyy"), cellFont, Element.ALIGN_CENTER);
+
+                totalValueSum += item.TotalValue;
+                totalQuantity += item.Quantity;
+            }
+
+            // Add totals row if there are items
+            if (metadata.DisplayItems.Count > 0)
+            {
+                PdfPCell totalLabelCell = new PdfPCell(new Phrase("ВСЬОГО:", boldFont));
+                totalLabelCell.Colspan = 5;
+                totalLabelCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                totalLabelCell.BackgroundColor = new BaseColor(240, 240, 240);
+                totalLabelCell.Padding = metadata.IsLandscape ? 6 : 5;
+                totalLabelCell.Border = PdfPCell.TOP_BORDER | PdfPCell.BOTTOM_BORDER;
+                totalLabelCell.BorderWidth = 1f;
+                table.AddCell(totalLabelCell);
+
+                AddCell(table, "", boldFont, Element.ALIGN_CENTER);
+                AddCell(table, "", boldFont, Element.ALIGN_CENTER);
+                AddCell(table, "", boldFont, Element.ALIGN_CENTER);
+
+                PdfPCell totalQuantityCell = new PdfPCell(new Phrase(totalQuantity.ToString(), boldFont));
+                totalQuantityCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                totalQuantityCell.BackgroundColor = new BaseColor(240, 240, 240);
+                totalQuantityCell.Padding = metadata.IsLandscape ? 6 : 5;
+                totalQuantityCell.Border = PdfPCell.TOP_BORDER | PdfPCell.BOTTOM_BORDER;
+                totalQuantityCell.BorderWidth = 1f;
+                table.AddCell(totalQuantityCell);
+
+                PdfPCell totalValueCell = new PdfPCell(new Phrase(totalValueSum.ToString("N2"), boldFont));
+                totalValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                totalValueCell.BackgroundColor = new BaseColor(240, 240, 240);
+                totalValueCell.Padding = metadata.IsLandscape ? 6 : 5;
+                totalValueCell.Border = PdfPCell.TOP_BORDER | PdfPCell.BOTTOM_BORDER;
+                totalValueCell.BorderWidth = 1f;
+                table.AddCell(totalValueCell);
+
+                PdfPCell emptyDateCell = new PdfPCell(new Phrase("", boldFont));
+                emptyDateCell.BackgroundColor = new BaseColor(240, 240, 240);
+                emptyDateCell.Border = PdfPCell.TOP_BORDER | PdfPCell.BOTTOM_BORDER;
+                emptyDateCell.BorderWidth = 1f;
+                table.AddCell(emptyDateCell);
+            }
+
+            document.Add(table);
+        }
+
+        private void AddCell(PdfPTable table, string text, iTextSharpFont font, int alignment)
+        {
+            PdfPCell cell = new PdfPCell(new Phrase(text, font));
+            cell.HorizontalAlignment = alignment;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.Padding = 4;
+            cell.MinimumHeight = 20;
+            table.AddCell(cell);
+        }
+
+        private void AddFooter(Document document, BaseFont baseFont)
+        {
+            document.Add(new Paragraph("\n"));
+
+            iTextSharpFont footerFont = new iTextSharpFont(baseFont, 8, iTextSharpFont.ITALIC, BaseColor.GRAY);
+            Paragraph footer = new Paragraph("Документ сформовано системою управління складами", footerFont);
+            footer.Alignment = Element.ALIGN_CENTER;
+            document.Add(footer);
+        }
+    }
+
+    // PDF Metadata class
+    public class PdfMetadata
+    {
+        public string Title { get; set; }
+        public string Subject { get; set; }
+        public string Keywords { get; set; }
+        public string Author { get; set; }
+        public string WarehouseName { get; set; }
+        public string GroupFilter { get; set; }
+        public DateTime ExportDate { get; set; }
+        public bool IsLandscape { get; set; } = true; // Default to landscape
+        public List<Form1.ProductDisplayItem> DisplayItems { get; set; }
     }
 }
